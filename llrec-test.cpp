@@ -86,9 +86,17 @@ int main(int argc, char* argv[])
     print(head);
 
     // Test out your linked list code
+    Node *smaller = nullptr;
+    Node *larger = nullptr;
+    int pivot = 10;
+    llpivot(head,smaller,larger,pivot);
 
-
-
+    cout << "New list smaller: ";
+    print(smaller);
+    cout << "New list larger: ";
+    print(larger);
+    cout << "New list: ";
+    print(head);
     
     return 0;
 
