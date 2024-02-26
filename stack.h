@@ -17,6 +17,8 @@ public:
     void pop();  // throws std::underflow_error if empty
     const T& top() const; // throws std::underflow_error if empty
     // Add other members only if necessary
+
+    // I just added this line
 };
 
 
