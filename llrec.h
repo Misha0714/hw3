@@ -52,11 +52,11 @@ void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot);
 
 
 
-struct Comparator {
+struct pred {
 	bool operator()(int val) const {
 		return val%2==0; 
     }
-}
+};
 
 /**
  * Given a linked list pointed to by head, removes (filters out) nodes
@@ -86,6 +86,8 @@ Node* llfilter(Node* head, Comp pred);
 // implement the above function now.
 //*****************************************************************************
 
+#include <iostream>
+
 template <typename Comp>
 Node* llfilter(Node* head, Comp pred)
 {
@@ -95,8 +97,9 @@ Node* llfilter(Node* head, Comp pred)
     if(head==nullptr) {
         return head; 
     }
-    Node* curr=llfilter(head,pred);
-    if(pred(head)==false) {
+    Node* curr=llfilter(head->next,pred);
+		//if the value is odd then delete that value and update curr 
+    if(pred(head->val)==true) {
         delete head;
         return curr; 
     }
