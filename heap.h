@@ -2,6 +2,7 @@
 #define HEAP_H
 #include <functional>
 #include <stdexcept>
+#include <vector>
 
 template <typename T, typename PComparator = std::less<T> >
 class Heap
@@ -85,6 +86,7 @@ T const & Heap<T,PComparator>::top() const {
 
 // We will start pop() for you to handle the case of 
 // calling top on an empty heap
+template <typename T, typename PComparator>
 void Heap<T,PComparator>::heapify(std::vector<T>& data) { 
   
   //set index 
@@ -102,7 +104,7 @@ void Heap<T,PComparator>::heapify(std::vector<T>& data) {
     if(leftIndex >= m) { 
       break;
     } 
-    int bestIndex = leftIndex
+    int bestIndex = leftIndex;
     T& best = data[leftIndex];
     //iterate through the children
       for(int i=leftIndex; i<rightIndex; i++) {
@@ -140,7 +142,7 @@ void Heap<T,PComparator>::pop() {
   heapify(data); 
 }  
 
-
+template <typename T, typename PComparator>
 void Heap<T,PComparator>::push(const T& item) {
     	data.push_back(item);
     	//adjust the index for the new item 
