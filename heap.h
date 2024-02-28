@@ -74,13 +74,13 @@ private:
 // We will start top() for you to handle the case of 
 // calling top on an empty heap
 template <typename T, typename PComparator>
-Heap::Heap(int m=2, PComparator c = PComparator()) {
+Heap<T,PComparator>::Heap(int m=2, PComparator c = PComparator()) {
   int m_=m; 
 	PComparator c_= c; 
 }
 
 template <typename T, typename PComparator>
-Heap::~Heap() { } 
+Heap<T,PComparator>::Heap::~Heap() { } 
 
 template <typename T, typename PComparator>
 bool Heap<T,PComparator>::empty() {
