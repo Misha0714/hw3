@@ -74,16 +74,16 @@ private:
 // We will start top() for you to handle the case of 
 // calling top on an empty heap
 template <typename T, typename PComparator>
-T const & Heap<T,PComparator>::top() const {
-  // Here we use exceptions to handle the case of trying
-  // to access the top element of an empty heap
-  if(data.empty()){
-    throw std::out_of_range("heap is empty");
-  }
-  return data.front();
+Heap::Heap(int m=2, PComparator c = PComparator()) {
+  int m_=m; 
+	PComparator c_= c; 
 }
 
+template <typename T, typename PComparator>
+Heap::~Heap() { } 
 
+template <typename T, typename PComparator>
+T const & Heap<T,PComparator>:: const {
 // We will start pop() for you to handle the case of 
 // calling top on an empty heap
 template <typename T, typename PComparator>
