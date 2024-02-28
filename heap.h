@@ -74,10 +74,8 @@ private:
 // We will start top() for you to handle the case of 
 // calling top on an empty heap
 template <typename T, typename PComparator>
-Heap<T,PComparator>::Heap(int m, PComparator c) {
-  int m_=m; 
-	PComparator c_= c; 
-}
+Heap<T,PComparator>::Heap(int nums, PComparator comparer) : m(nums), c(comparer) { } 
+
 
 
 template <typename T, typename PComparator>
@@ -112,19 +110,13 @@ void Heap<T,PComparator>::heapify(std::vector<T>& data) {
   //set index 
   std::size_t index = 0;
   
-  //parent index
-  //std::size_t parent_index = (index - 1) / m;
-  //parent value 
-  //T& parent = data[parent_index];
-  //left and right nodes index 
-  //while this is true 
   int leftIndex = m * index + 1; 
   int rightIndex = m * index + m;
   bool trickle = true; 
   data[0] = data[data.size()-1]; 
   data.pop_back(); 
   while(trickle) {
-    if(leftIndex >= data.size) { 
+    if(leftIndex >= data.size()) { 
       break;
     } 
     int bestIndex = leftIndex;
@@ -144,9 +136,11 @@ void Heap<T,PComparator>::heapify(std::vector<T>& data) {
       if(c(data[bestIndex], data[index])) {
         std::swap(data[bestIndex], data[index]);
         index=bestIndex; 
+        leftIndex = m * index + 1;
+        rightIndex = m * index + m;
+        
       }
-      else { trickle=false; }
-  
+      else { trickle=false; } 
   }
 }
 
