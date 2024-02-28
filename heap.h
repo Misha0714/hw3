@@ -87,17 +87,20 @@ T const & Heap<T,PComparator>::top() const {
 // calling top on an empty heap
 voidHeap<T,PComparator>::heapify(std::vector<T>& data) { 
   
-  //current node 
-  T& current = data[index];
-  //parent index and actual parent value 
+  //set index 
+  std::size_t index = 0;
+  //parent index
   std::size_t parent_index = (index - 1) / m;
+  //parent value 
   T& parent = data[parent_index];
-  //left and right nodes 
+  //left and right nodes index 
   int leftIndex = m * index + 1; 
   int rightIndex = m * index + m;
   //while this is true 
   while(true) {
+    //iterate through the children 
     for(int i=leftIndex; i<rightIndex; i++) {
+      //best node 
       T& best = data[leftIndex];
       //check to see you are not at the last child 
       if(leftIndex >= m || rightIndex >= m) {
@@ -111,6 +114,7 @@ voidHeap<T,PComparator>::heapify(std::vector<T>& data) {
         break; 
       }
     }
+  }
 }
 
 template <typename T, typename PComparator>
@@ -123,28 +127,8 @@ void Heap<T,PComparator>::pop() {
         //if there is one data member then just pop back the only element 
        data.pop_back(); 
   }
-  if(data.size() > 1) {
-    //swap first and last element
-    data[0] = data [data.size() - 1];
-    //delete the last element that was swapped 
-    data.pop_back(); 
-    //while this is true 
-    while(true) {
-    //compare current with false 
-      std::size_t parent_index = (index - 1) / m;
-      T& current = data[index];
-      T& parent = data[parent_index];
-      if(c(current,parent)) {
-      //if the smallest element in first index is less than current data index
-        std::swap(current, parent); //swap them            
-      }
-      else {
-        break; 
-      }
-    }
-  }
+  heapify(data); 
 }  
-
 
 
 void Heap<T,PComparator>::push(const T& item) {
