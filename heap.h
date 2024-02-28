@@ -94,26 +94,36 @@ void Heap<T,PComparator>::heapify(std::vector<T>& data) {
   //parent value 
   T& parent = data[parent_index];
   //left and right nodes index 
+  //while this is true 
   int leftIndex = m * index + 1; 
   int rightIndex = m * index + m;
-  //while this is true 
-  while(true) {
-    //iterate through the children 
-    for(int i=leftIndex; i<rightIndex; i++) {
-      //best node 
-      T& best = data[leftIndex];
-      //check to see you are not at the last child 
-      if(leftIndex >= m || rightIndex >= m) {
-        //if best is worse compared to the next index 
-        if(c(best, data[i+1])) {
-          //then swap the two places 
-          std::swap(best, data[i+1]);
-          //update best 
-          best = data[i+1]; 
+  bool trickle = true; 
+  while(trickle) {
+    if(leftIndex >= m) { 
+      break;
+    } 
+    int bestIndex = leftIndex
+    T& best = data[leftIndex];
+    //iterate through the children
+      for(int i=leftIndex; i<rightIndex; i++) {
+        //best node
+        //check to see you are not at the last child 
+        if(rightIndex <= m) {
+          //if best is worse compared to the next index 
+          if(c(best, data[i+1])) {
+            //update best 
+            bestIndex = i+1; 
+            best = data[bestIndex];
+          } 
         }
-        break; 
       }
-    }
+      //compare child node with parent node 
+      if(c(best,parent)) {
+        index=bestIndex; 
+        std::swap(best, parent);
+      }
+      else { trickle=false; }
+  
   }
 }
 
