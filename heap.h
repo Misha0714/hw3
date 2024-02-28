@@ -83,7 +83,18 @@ template <typename T, typename PComparator>
 Heap::~Heap() { } 
 
 template <typename T, typename PComparator>
-T const & Heap<T,PComparator>:: const {
+bool Heap<T,PComparator>::empty() {
+  if (data.empty()) {
+    return true; 
+  } 
+  return false; 
+}
+
+template <typename T, typename PComparator>
+size_t Heap<T,PComparator>::size() {
+  size_t size_ = data.size(); 
+  return size_; 
+}
 // We will start pop() for you to handle the case of 
 // calling top on an empty heap
 template <typename T, typename PComparator>
