@@ -74,16 +74,17 @@ private:
 // We will start top() for you to handle the case of 
 // calling top on an empty heap
 template <typename T, typename PComparator>
-Heap<T,PComparator>::Heap(int m=2, PComparator c = PComparator()) {
+Heap<T,PComparator>::Heap(int m, PComparator c) {
   int m_=m; 
 	PComparator c_= c; 
 }
+
 
 template <typename T, typename PComparator>
 Heap<T,PComparator>::Heap::~Heap() { } 
 
 template <typename T, typename PComparator>
-bool Heap<T,PComparator>::empty() {
+bool Heap<T,PComparator>::empty() const {
   if (data.empty()) {
     return true; 
   } 
@@ -91,9 +92,17 @@ bool Heap<T,PComparator>::empty() {
 }
 
 template <typename T, typename PComparator>
-size_t Heap<T,PComparator>::size() {
+size_t Heap<T,PComparator>::size() const {
   size_t size_ = data.size(); 
   return size_; 
+}
+
+template <typename T, typename PComparator>
+T const & Heap<T,PComparator>::top() const {
+   if(data.empty()) {
+    throw std::underflow_error("heap is empty");
+  }
+  return data.front(); 
 }
 // We will start pop() for you to handle the case of 
 // calling top on an empty heap
@@ -102,38 +111,39 @@ void Heap<T,PComparator>::heapify(std::vector<T>& data) {
   
   //set index 
   std::size_t index = 0;
+  
   //parent index
-  std::size_t parent_index = (index - 1) / m;
+  //std::size_t parent_index = (index - 1) / m;
   //parent value 
-  T& parent = data[parent_index];
+  //T& parent = data[parent_index];
   //left and right nodes index 
   //while this is true 
   int leftIndex = m * index + 1; 
   int rightIndex = m * index + m;
   bool trickle = true; 
+  data[0] = data[data.size()-1]; 
+  data.pop_back(); 
   while(trickle) {
-    if(leftIndex >= m) { 
+    if(leftIndex >= data.size) { 
       break;
     } 
     int bestIndex = leftIndex;
-    T& best = data[leftIndex];
     //iterate through the children
       for(int i=leftIndex; i<rightIndex; i++) {
         //best node
         //check to see you are not at the last child 
-        if(rightIndex <= m) {
+        if(i+1 < data.size()) {
           //if best is worse compared to the next index 
-          if(c(best, data[i+1])) {
+          if(c(data[i+1], data[bestIndex])) {
             //update best 
             bestIndex = i+1; 
-            best = data[bestIndex];
           } 
         }
       }
       //compare child node with parent node 
-      if(c(best,parent)) {
+      if(c(data[bestIndex], data[index])) {
+        std::swap(data[bestIndex], data[index]);
         index=bestIndex; 
-        std::swap(best, parent);
       }
       else { trickle=false; }
   
@@ -142,15 +152,18 @@ void Heap<T,PComparator>::heapify(std::vector<T>& data) {
 
 template <typename T, typename PComparator>
 void Heap<T,PComparator>::pop() {
+  //if vector is empty throw error 
   if(data.empty()){
     throw std::underflow_error("heap is empty");
   }
-
+  //if size of vector is one just pop_back() the vector 
 	if (data.size() == 1) {
-        //if there is one data member then just pop back the only element 
        data.pop_back(); 
+       return; 
   }
+  //otherwise call heapify on the vector 
   heapify(data); 
+
 }  
 
 template <typename T, typename PComparator>
