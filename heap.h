@@ -85,7 +85,7 @@ T const & Heap<T,PComparator>::top() const {
 
 // We will start pop() for you to handle the case of 
 // calling top on an empty heap
-voidHeap<T,PComparator>::heapify(std::vector<T>& data) { 
+void Heap<T,PComparator>::heapify(std::vector<T>& data) { 
   
   //set index 
   std::size_t index = 0;
