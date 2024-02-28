@@ -11,8 +11,7 @@ class Stack : public std::vector<T>
 private: 
 
 public:
-    Stack() {
-    }
+    Stack() {}
     ~Stack() {}
 		
     bool empty() const {
@@ -23,20 +22,19 @@ public:
       	return std::vector<T>::size(); 
     }
     void push(const T& item) {
-       std::vector<T>::insert(std::vector<T>::begin(),item);
+       std::vector<T>::push_back(item);
     }
     void pop() {
         if(std::vector<T>::empty()) { 
             throw std::underflow_error("empty"); 
-				}
-
-	    	std::vector<T>::erase(std::vector<T>::begin()); 
+		}
+	    	std::vector<T>::pop_back(); 
     }
     const T& top() const {
 			if(std::vector<T>::empty()) { 
 					throw std::underflow_error("empty"); 
 			}
-	    return std::vector<T>::front(); 
+	    return std::vector<T>::back(); 
     }
  
 

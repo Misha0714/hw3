@@ -97,7 +97,7 @@ Node* llfilter(Node* head, Comp pred)
     if(head==nullptr) {
         return head; 
     }
-    Node* curr=llfilter(head->next,pred);
+    Node* curr=llfilter(head->next, pred);
 		//if the value is odd then delete that value and update curr 
     if(pred(head->val)==true) {
         delete head;

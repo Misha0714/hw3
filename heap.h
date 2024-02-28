@@ -62,52 +62,116 @@ public:
 private:
   /// Add whatever helper functions and data members you need below
 
-
-
+  std::vector<T> data; 
+  int m; 
+  PComparator c; 
+  void heapify(std::vector<T>& data);
 
 };
 
 // Add implementation of member functions here
-
-
 // We will start top() for you to handle the case of 
 // calling top on an empty heap
 template <typename T, typename PComparator>
-T const & Heap<T,PComparator>::top() const
-{
+T const & Heap<T,PComparator>::top() const {
   // Here we use exceptions to handle the case of trying
   // to access the top element of an empty heap
-  if(empty()){
-    // ================================
-    // throw the appropriate exception
-    // ================================
-
-
+  if(data.empty()){
+    throw std::out_of_range("heap is empty");
   }
-  // If we get here we know the heap has at least 1 item
-  // Add code to return the top element
-
-
-
+  return data.front();
 }
 
 
 // We will start pop() for you to handle the case of 
 // calling top on an empty heap
+voidHeap<T,PComparator>::heapify(std::vector<T>& data) { 
+  
+  //current node 
+  T& current = data[index];
+  //parent index and actual parent value 
+  std::size_t parent_index = (index - 1) / m;
+  T& parent = data[parent_index];
+  //left and right nodes 
+  int leftIndex = m * index + 1; 
+  int rightIndex = m * index + m;
+  //while this is true 
+  while(true) {
+    for(int i=leftIndex; i<rightIndex; i++) {
+      T& best = data[leftIndex];
+      //check to see you are not at the last child 
+      if(leftIndex >= m || rightIndex >= m) {
+        //if best is worse compared to the next index 
+        if(c(best, data[i+1])) {
+          //then swap the two places 
+          std::swap(best, data[i+1]);
+          //update best 
+          best = data[i+1]; 
+        }
+        break; 
+      }
+    }
+}
+
 template <typename T, typename PComparator>
-void Heap<T,PComparator>::pop()
-{
-  if(empty()){
-    // ================================
-    // throw the appropriate exception
-    // ================================
-
-
+void Heap<T,PComparator>::pop() {
+  if(data.empty()){
+    throw std::underflow_error("heap is empty");
   }
 
+	if (data.size() == 1) {
+        //if there is one data member then just pop back the only element 
+       data.pop_back(); 
+  }
+  if(data.size() > 1) {
+    //swap first and last element
+    data[0] = data [data.size() - 1];
+    //delete the last element that was swapped 
+    data.pop_back(); 
+    //while this is true 
+    while(true) {
+    //compare current with false 
+      std::size_t parent_index = (index - 1) / m;
+      T& current = data[index];
+      T& parent = data[parent_index];
+      if(c(current,parent)) {
+      //if the smallest element in first index is less than current data index
+        std::swap(current, parent); //swap them            
+      }
+      else {
+        break; 
+      }
+    }
+  }
+}  
 
 
+
+void Heap<T,PComparator>::push(const T& item) {
+    	data.push_back(item);
+    	//adjust the index for the new item 
+    	std::size_t index = data.size() - 1;
+    	while (index != 0) {
+        //while index does not equal 0 compare current node to parent node 
+        std::size_t parent_index = (index - 1) / m;
+        if(parent_index < 0) {
+          break; 
+        }
+        T& current = data[index];
+        T& parent = data[parent_index];
+        //if current node is less than parent you are done
+        if (c(current, parent)) {
+          //if the current node is less than swap the two nodes and adjust the index you are at to the parent
+          std::swap(current, parent);
+          index = parent_index;
+        }
+        else {
+          break; 
+        }
+    }
 }
+
+
 
 
 
