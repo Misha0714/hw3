@@ -1,7 +1,5 @@
 #include "llrec.h"
 
-using namespace std;
-
 //*********************************************
 // Provide your implementation of llpivot below
 //*********************************************
