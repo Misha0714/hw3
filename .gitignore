@@ -1,3 +1,5 @@
 *.o
 llrec-test
 hw3_tests
+logicsim/output.png
+logicsim/output.uml

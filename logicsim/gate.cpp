@@ -89,10 +89,9 @@ Event* Or2Gate::update(uint64_t current_time)
   return e;
 }
 //NotGate function 
-NotGate::NotGate(Wire* a, Wire* b, Wire* o) : Gate(2,o)
+NotGate::NotGate(Wire* a, Wire* o) : Gate(2,o)
 {
     wireInput(0,a);
-    wireInput(1,b);
 }
 //update functin of NotGate 
 Event* NotGate::update(uint64_t current_time)
